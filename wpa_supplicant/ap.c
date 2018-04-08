@@ -445,6 +445,14 @@ int wpa_supplicant_create_ap(struct wpa_supplicant *wpa_s,
 	else
 		params.uapsd = -1;
 
+	if ((wpa_s->drv_flags & WPA_DRIVER_FLAGS_4WAY_HANDSHAKE) &&
+	    (params.key_mgmt_suite == KEY_MGMT_PSK ||
+	     params.key_mgmt_suite == KEY_MGMT_FT_PSK)) {
+		params.passphrase = ssid->passphrase;
+		if (ssid->psk_set)
+			params.psk = ssid->psk;
+	}
+
 	if (wpa_drv_associate(wpa_s, &params) < 0) {
 		wpa_msg(wpa_s, MSG_INFO, "Failed to start AP functionality");
 		return -1;

@@ -138,6 +138,12 @@ DRV_WPA_LDFLAGS += -framework CoreFoundation
 DRV_WPA_LDFLAGS += -F/System/Library/PrivateFrameworks -framework Apple80211
 endif
 
+ifdef CONFIG_DRIVER_OSX_OTHER
+DRV_WPA_CFLAGS += -DCONFIG_DRIVER_OSX_OTHER
+DRV_WPA_OBJS += ../src/drivers/driver_osx_other.o
+DRV_WPA_LDFLAGS += -framework IOKit
+endif
+
 ifdef CONFIG_DRIVER_IPHONE
 DRV_WPA_CFLAGS += -DCONFIG_DRIVER_IPHONE
 DRV_WPA_OBJS += ../src/drivers/driver_iphone.o
